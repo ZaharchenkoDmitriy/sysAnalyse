@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+h4 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+li {
+  list-style-type: none;
+}
+
+.part {
+  margin-bottom: 3rem;
+  margin-left: 50vw;
+  transform: translateX(-50%);
+  border-bottom: 2px solid rgba(218, 218, 218, 0.55);
+  padding-bottom: 2rem;
+}
+
+#lab2 {
+  display: flex;
+  justify-content: space-between;
+  width: 800px;
+}
+
+#lab1 {
+  width: 400px;
+  text-align: center;
+  margin-right: 20rem;
+  margin-left: 5rem;
+}
+
+#lab1 button {
+  margin-top: 2rem;
+}
+
+#lab1 > ul {
+  display: flex;
+  justify-content: space-around;
+}
+.li {
+  list-style-type: none;
+}
+
+#lab3 {
+}
+#lab3 #predictions li{
+
+}

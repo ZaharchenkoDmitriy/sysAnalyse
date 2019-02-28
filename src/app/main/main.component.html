@@ -1,0 +1,83 @@
+<div class="part">
+  <div id="lab1">
+    <h2>Lab1</h2>
+    <h4>Enter weights</h4>
+    <ul id="weights">
+      <li *ngFor="let weight of weights">
+        <input required="required"
+               type="number"
+               [(ngModel)]="weight" class="mdl-textfield__input">
+      </li>
+    </ul>
+
+    <h4>Enter values</h4>
+    <ul id="variants">
+      <ul style="margin: 0 5px" class="values" *ngFor="let values of variants">
+        <li *ngFor="let value of values">
+          <input class="mdl-textfield__input" type="text" [(ngModel)]="value.value" id="{{value.value}}"
+                 pattern="-?[0-9]*(\.[0-9]+)?">
+        </li>
+      </ul>
+    </ul>
+
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" (click)="calcDecision()">Predict
+    </button>
+
+    <div *ngIf="showResult" id="result">
+      <h4>Best choice is:</h4>
+      <p>{{result + 1}}</p>
+    </div>
+  </div>
+</div>
+
+<div id="lab2" class="part">
+  <div id="new_value">
+    <label for="val">Enter value</label>
+    <input id="val" style="width: 94px" class="mdl-textfield__input" type="number" [(ngModel)]="lab3val">
+    <button style="margin-top: 1rem" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+            (click)="predictLab3($event)">
+      Predict
+    </button>
+  </div>
+  <div>
+    <label for="val">Enter &#593; value</label>
+    <input style="width: 94px" type="number" [(ngModel)]="a" (change)="recalculate(1)" class="mdl-textfield__input">
+  </div>
+
+  <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+    <thead>
+    <tr>
+      <th>Index</th>
+      <th>Value</th>
+      <th style="text-align: center">Formula</th>
+      <th>Prediction</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let prediction of predictions; let i = index;">
+      <td>{{i + 2}}</td>
+      <td class="mdl-data-table__cell--non-numeric">
+        <input style="width: 50px" [(ngModel)]="prediction.value" (change)="recalculate(i)" class="mdl-textfield__input" type="number"
+               id="sample1">
+      </td>
+      <td class="mdl-data-table__cell--non-numeric">{{prediction.formula}}</td>
+      <td class="mdl-data-table__cell--non-numeric">{{prediction.dy}}</td>
+      <td style="color: red; cursor: pointer" (click)="removePrediction(i)">&#10008;</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<dialog class="mdl-dialog" style="margin:auto">
+  <h4 class="mdl-dialog__title">Error</h4>
+  <div class="mdl-dialog__content">
+    <p>
+      {{dialogText}}
+    </p>
+  </div>
+  <div class="mdl-dialog__actions">
+    <button type="button" (click)="closeDialog()" class="mdl-button">OK</button>
+  </div>
+</dialog>
