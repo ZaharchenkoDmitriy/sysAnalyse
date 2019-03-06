@@ -3,6 +3,7 @@ import {MethodService} from '../services/method.service';
 import {Period} from '../models/period';
 import {SquareMethodService} from '../services/square-method.service';
 import {forEach} from '@angular/router/src/utils/collection';
+import {GausServiceService} from '../services/gaus-service.service';
 
 @Component({
   selector: 'app-main',
@@ -26,9 +27,20 @@ export class MainComponent implements OnInit {
     {values: 67}, {values: 62}, {values: 50}, {values: 56}, {values: 47}, {values: 56},
     {values: 54}, {values: 42}, {values: 64}, {values: 60}, {values: 70}, {values: 66},
     {values: 57}, {values: 55}, {values: 52}, {values: 62}, {values: 70}, {values: 72}
-    ];
+  ];
 
-  constructor(private method: MethodService, private squareService: SquareMethodService) {
+  private gausKs = [
+    [1, 10, 14, 150],
+    [1, 15, 13, 13 * 15],
+    [1, 13, 19, 13 * 19],
+    [1, 19, 14, 19 * 14],
+    [1, 14, 18, 14 * 18],
+    [1, 18, 17, 18 * 17]
+  ];
+  private gausYs = [13, 19, 14, 18, 17, 11];
+
+  constructor(private method: MethodService, private squareService: SquareMethodService, private gausService: GausServiceService) {
+    this.gausService.normalize(this.gausYs, this.gausKs);
   }
 
   ngOnInit() {
@@ -49,9 +61,11 @@ export class MainComponent implements OnInit {
   predictLab3() {
     this.addPrediction(this.lab3val, this.predictions.length - 1);
   }
+
   addPrediction(value, index) {
     this.predictions.push(this.squareService.calcNextPeriod(value, this.predictions[index]));
   }
+
   recalculate(index) {
     this.squareService.initA(this.a);
     for (let i = index; i < this.predictions.length; i++) {
@@ -75,6 +89,7 @@ export class MainComponent implements OnInit {
     const showDialogButton = document.querySelector('#show-dialog');
     dialog.showModal();
   }
+
   closeDialog() {
     const dialog = document.querySelector('dialog');
     dialog.close();
