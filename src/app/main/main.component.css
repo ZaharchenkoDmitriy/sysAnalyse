@@ -23,6 +23,7 @@ li {
 #lab2 {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   width: 800px;
 }
 
@@ -49,10 +50,4 @@ li {
 }
 #lab3 #predictions li{
 
-}
-
-@media only screen and (max-width: 800px){
-  #lab2 {
-    flex-direction: column;
-  }
 }

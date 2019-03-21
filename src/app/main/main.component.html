@@ -30,18 +30,20 @@
   </div>
 </div>
 
-<div id="lab2" class="part">
-  <div id="new_value">
-    <label for="val">Enter value</label>
-    <input id="val" style="width: 94px" class="mdl-textfield__input" type="number" [(ngModel)]="lab3val">
-    <button style="margin-top: 1rem" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-            (click)="predictLab3()">
-      Predict
-    </button>
-  </div>
-  <div>
-    <label for="val">Enter &#593; value</label>
-    <input style="width: 94px" type="number" [(ngModel)]="a" (change)="recalculate(1)" class="mdl-textfield__input">
+<div  class="part">
+  <div id="lab2" >
+    <div id="new_value">
+      <label for="val">Enter value</label>
+      <input id="val" style="width: 94px" class="mdl-textfield__input" type="number" [(ngModel)]="lab3val">
+      <button style="margin-top: 1rem" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+              (click)="predictLab3()">
+        Predict
+      </button>
+    </div>
+    <div>
+      <label for="val">Enter &#593; value</label>
+      <input style="width: 94px" type="number" [(ngModel)]="a" (change)="recalculate(1)" class="mdl-textfield__input">
+    </div>
   </div>
 
   <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
