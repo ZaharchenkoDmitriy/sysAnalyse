@@ -14,8 +14,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forRoot(routes)
   ],
-  exports: [RouteModule]
+  exports: [AppRouteModule]
 })
 
 
-export class RouteModule { }
+export class AppRouteModule { }

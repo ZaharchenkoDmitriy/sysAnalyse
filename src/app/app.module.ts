@@ -3,8 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
-import {RouteModule} from './route/route.module';
 import {FormsModule, NgForm} from '@angular/forms';
+import {RouterModule, Routes} from '@angular/router';
+
+const routes: Routes = [
+  {path: '', component: MainComponent}
+];
 
 @NgModule({
   declarations: [
@@ -13,7 +17,10 @@ import {FormsModule, NgForm} from '@angular/forms';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot(
+      routes
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]

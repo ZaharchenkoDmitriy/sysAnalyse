@@ -22,7 +22,6 @@ export class MethodService {
       });
       results.push(variantResult);
     });
-    console.log(results);
     return results.indexOf(Math.max(...results));
   }
 }
