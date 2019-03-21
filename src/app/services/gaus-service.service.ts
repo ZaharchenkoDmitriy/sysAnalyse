@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {log} from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,29 @@ export class GausServiceService {
 
   private res: any;
 
-  constructor() { }
+  constructor() {
+  }
+
+  func(a, b) {
+    return [1, a, b, a * b];
+  }
+
+  solve(vals) {
+    const last = vals.pop();
+    const ys = vals.map((el) => el.y);
+    const ks = vals.map( el => this.func(el.a, el.b));
+
+    if (ks[0].length <= ys.length) {
+      this.normalize(ys, ks);
+    } else {
+      this.res = [];
+      for (let i = 0; i < ys.length; i++) {
+        this.res.push({y: ys[i], k: ks[i]});
+      }
+    }
+    const rs = this.getRatios(this.res.map(e => e.k), this.res.map(e => e.y));
+    return rs[0] + rs[1] * last.a + rs[2] * last.b + rs[3] * last.a * last.b;
+  }
 
   normalize(ys: number[], ks: number[][]) {
     const stepsCount = ys.length;
@@ -47,7 +70,55 @@ export class GausServiceService {
     return res;
   }
 
-  solve(ys: number[], ks: number[][]) {
-    this.normalize(ys, ks);
+  getRatios(aArr, bArr) {
+    const matrix = this.matrixToStepType(aArr, bArr);
+    const res = [];
+
+    for (let i = matrix.ys.length - 1; i >= 0; i-- ) {
+      let temp = 0;
+      for (let j = matrix.ks[i].length - 1; j > i; j--) {
+        temp += matrix.ks[i][j] * res[matrix.ks[i].length - 1 - j];
+      }
+      res.push((matrix.ys[i] - temp) / matrix.ks[i][i]);
+    }
+    return res.reverse();
+  }
+
+  matrixToStepType(aArr, bArr) {
+    let a = 0;
+    let b = 0;
+    let temp = 0;
+
+    for (let i = 0; i < bArr.length; i++) {
+      bArr[i] = bArr[i] / Math.pow(2, i * 6 + 1);
+      for (let j = 0; j < aArr[i].length; j++) {
+        aArr[i][j] = aArr[i][j] / Math.pow(2, i * 6 + 1);
+      }
+    }
+
+    for (let i = 0; i < aArr[0].length - 1; i++) {
+      for (let j = i + 1; j < aArr.length; j++) {
+        if (aArr[j][i] !== 0) {
+          if (aArr[j][i] % aArr[i][i] === 0) {
+            temp = aArr[j][i] / aArr[i][i];
+            aArr[i].forEach((el, index) => {
+              aArr[j][index] = aArr[j][index] - temp * el;
+            });
+            bArr[j] = bArr[j] - bArr[i] * temp;
+          } else {
+            a = aArr[j][i];
+            b = aArr[i][i];
+            aArr[i].forEach((el, index) => {
+              aArr[j][index] = aArr[j][index] * b - a * el;
+            });
+            bArr[j] = bArr[j] * b - a * bArr[i];
+          }
+        }
+      }
+    }
+    return {
+      ks: aArr,
+      ys: bArr
+    };
   }
 }

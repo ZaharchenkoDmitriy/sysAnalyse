@@ -6,7 +6,7 @@
       <li *ngFor="let weight of weights">
         <input required="required"
                type="number"
-               [(ngModel)]="weight" class="mdl-textfield__input">
+               [(ngModel)]="weight.value" class="mdl-textfield__input">
       </li>
     </ul>
 
@@ -69,6 +69,42 @@
   </table>
 </div>
 
+<div id="lab3" class="part">
+  <div >
+    <label for="val">Enter value</label>
+    <input style="width: 94px" class="mdl-textfield__input" type="number" [(ngModel)]="kgPlus">
+    <button style="margin-top: 1rem" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+            (click)="predictKG()">
+      Predict
+    </button>
+  </div>
+  <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+    <thead>
+      <tr>
+        <th>Index</th>
+        <th>Value</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let g of kg; let i = index;">
+        <td>{{i + 1}}</td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <input style="width: 50px" [(ngModel)]="g.v" (change)="recalculateGauss(i)" class="mdl-textfield__input" type="number"
+                 id="sample2">
+        </td>
+        <td style="color: red; cursor: pointer" (click)="removeG(i)">&#10008;</td>
+      </tr>
+      <tr>
+        <td>{{kg.length + 1 }}</td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <input style="width: 50px" [(ngModel)]="gResult" disabled="true" class="mdl-textfield__input" type="number">
+        </td>
+        <td>Prediction</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <dialog class="mdl-dialog" style="margin:auto">
   <h4 class="mdl-dialog__title">Error</h4>

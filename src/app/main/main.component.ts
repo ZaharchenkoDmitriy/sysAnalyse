@@ -11,7 +11,7 @@ import {GausServiceService} from '../services/gaus-service.service';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-  public weights = [0.3, 0.4];
+  public weights = [{value: 0.3}, {value: 0.4}];
   public variants = [[{value: 2}, {value: 4}], [{value: 3}, {value: 5}], [{value: 4}, {value: 1}]];
   public result = -1;
   public showResult = false;
@@ -29,18 +29,21 @@ export class MainComponent implements OnInit {
     {values: 57}, {values: 55}, {values: 52}, {values: 62}, {values: 70}, {values: 72}
   ];
 
-  private gausKs = [
-    [1, 10, 14, 150],
-    [1, 15, 13, 13 * 15],
-    [1, 13, 19, 13 * 19],
-    [1, 19, 14, 19 * 14],
-    [1, 14, 18, 14 * 18],
-    [1, 18, 17, 18 * 17]
-  ];
-  private gausYs = [13, 19, 14, 18, 17, 11];
+  public kgPlus = 0;
+  public gResult = 0;
+  public kg = [
+    {v: 3484},
+    {v: 3606},
+    {v: 3867},
+    {v: 3911},
+    {v: 3964},
+    {v: 4411},
+    {v: 4604},
+    {v: 4149},
+    {v: 4299}
+    ];
 
   constructor(private method: MethodService, private squareService: SquareMethodService, private gausService: GausServiceService) {
-    this.gausService.normalize(this.gausYs, this.gausKs);
   }
 
   ngOnInit() {
@@ -50,6 +53,7 @@ export class MainComponent implements OnInit {
     this.lab3Values.forEach((value, index) => {
       this.addPrediction(value.values, index);
     });
+    this.recalculateGauss();
   }
 
   calcDecision() {
@@ -61,11 +65,32 @@ export class MainComponent implements OnInit {
   predictLab3() {
     this.addPrediction(this.lab3val, this.predictions.length - 1);
   }
+  predictKG() {
+    this.kg.push({v: this.kgPlus});
+    this.recalculateGauss();
+  }
 
   addPrediction(value, index) {
     this.predictions.push(this.squareService.calcNextPeriod(value, this.predictions[index]));
   }
 
+  removeG(index) {
+    if (this.kg.length === 6) {
+      this.alert('Sorry you cant delete this item');
+      return;
+    }
+
+    this.kg = this.kg.filter((v, i) => i !== index);
+    this.recalculateGauss();
+  }
+
+  recalculateGauss() {
+    const r = [];
+    for (let i = 1; i < this.kg.length; i++) {
+      r.push({y: this.kg[i + 1] ? this.kg[i + 1].v : undefined, a: this.kg[i - 1].v, b: this.kg[i].v});
+    }
+    this.gResult = Math.round(this.gausService.solve(r));
+  }
   recalculate(index) {
     this.squareService.initA(this.a);
     for (let i = index; i < this.predictions.length; i++) {
