@@ -23,10 +23,9 @@ export class MainComponent implements OnInit {
   public predictions = [];
   // {values: 46}, {values: 56}
   private lab3Values = [
-    {values: 54}, {values: 43}, {values: 57}, {values: 56},
-    {values: 67}, {values: 62}, {values: 50}, {values: 56}, {values: 47}, {values: 56},
-    {values: 54}, {values: 42}, {values: 64}, {values: 60}, {values: 70}, {values: 66},
-    {values: 57}, {values: 55}, {values: 52}, {values: 62}, {values: 70}, {values: 72}
+    {values: 32.55}, {values: 32.6}, {values: 32.99}, {values: 33.03},
+    {values: 33.08}, {values: 33.11}, {values: 33.12}, {values: 33.15}, {values: 33.16}, {values: 33.04},
+    {values: 33.02}, {values: 33}, {values: 33}
   ];
 
   public kgPlus = 0;
@@ -48,7 +47,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.squareService.initA(this.a);
-    this.predictions.push(new Period(56, 46));
+    this.predictions.push(new Period(32.23, 32.23));
 
     this.lab3Values.forEach((value, index) => {
       this.addPrediction(value.values, index);
