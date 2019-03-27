@@ -22,6 +22,7 @@ export class MainComponent implements OnInit {
 
   public predictions = [];
   // {values: 46}, {values: 56}
+  public firstPrediction = {v: 32.23, y: 32.23};
   private lab3Values = [
     {values: 32.55}, {values: 32.6}, {values: 32.99}, {values: 33.03},
     {values: 33.08}, {values: 33.11}, {values: 33.12}, {values: 33.15}, {values: 33.16}, {values: 33.04},
@@ -47,8 +48,8 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.squareService.initA(this.a);
-    this.predictions.push(new Period(32.23, 32.55));
 
+    this.predictions.push(new Period(this.firstPrediction.v, this.firstPrediction.y));
     this.lab3Values.forEach((value, index) => {
       this.addPrediction(value.values, index);
     });

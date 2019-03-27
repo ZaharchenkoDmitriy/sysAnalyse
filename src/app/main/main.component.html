@@ -52,19 +52,23 @@
       <th>Index</th>
       <th>Value</th>
       <th style="text-align: center">Formula</th>
-      <th>Prediction</th>
+      <th>Prediction for this period</th>
       <th></th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let prediction of predictions; let i = index;">
-      <td>{{i + 2}}</td>
+      <td>{{i + 1}}</td>
       <td class="mdl-data-table__cell--non-numeric">
-        <input style="width: 50px" [(ngModel)]="prediction.value" (change)="recalculate(i)" class="mdl-textfield__input" type="number"
+        <input style="width: 50px" [(ngModel)]="prediction.value" (change)="recalculate(i == 0 ? i + 1 : i)" class="mdl-textfield__input" type="number"
                id="sample1">
       </td>
       <td class="mdl-data-table__cell--non-numeric">{{prediction.formula}}</td>
-      <td class="mdl-data-table__cell--non-numeric">{{prediction.dy}}</td>
+      <td *ngIf="i !== 0" class="mdl-data-table__cell--non-numeric">{{prediction.dy}}</td>
+      <td *ngIf="i === 0" class="mdl-data-table__cell--non-numeric">
+        <input style="width: 50px" [(ngModel)]="prediction.dy" (change)="recalculate(i+1)" class="mdl-textfield__input" type="number"
+               id="sample1">
+      </td>
       <td style="color: red; cursor: pointer" (click)="removePrediction(i)">&#10008;</td>
     </tr>
     </tbody>

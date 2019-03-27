@@ -15,7 +15,7 @@ export class SquareMethodService {
 
   calcNextPeriod(value, period: Period): Period {
     const nextPeriod = new Period(value, +((this.a * period.value) + (1 - this.a) * period.dy).toFixed(2));
-    nextPeriod.formula = `${this.a} * ${period.value} + ${1-this.a} * ${period.dy}`;
+    nextPeriod.formula = `${this.a} * ${period.value} + ${1 - this.a} * ${period.dy}`;
     return nextPeriod;
   }
 }
