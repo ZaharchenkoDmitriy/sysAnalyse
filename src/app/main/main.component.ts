@@ -47,7 +47,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.squareService.initA(this.a);
-    this.predictions.push(new Period(32.23, 32.23));
+    this.predictions.push(new Period(32.23, 32.55));
 
     this.lab3Values.forEach((value, index) => {
       this.addPrediction(value.values, index);
